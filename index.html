@@ -1,0 +1,1505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OPS x KIPHRD Training Program Discussion</title>
+  <script src="./ops_kiphrd_layout.js"></script>
+  <style>
+    :root {
+      --blue: #1f4aa0;
+      --blue-dark: #0f347f;
+      --green: #2e7d42;
+      --yellow: #ffdf3d;
+      --red: #ed1c24;
+      --ink: #182230;
+      --muted: #5f6b7a;
+      --line: #d7dfef;
+      --bg: #f7f9fd;
+      --surface: #ffffff;
+      --soft-blue: #eaf0fb;
+      --soft-green: #e6f4ea;
+      --soft-yellow: #fef7e0;
+      --soft-red: #fce8e6;
+      --shadow: 0 18px 48px rgba(15, 52, 127, 0.14);
+      --font: Roboto, "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+    }
+
+    button, a { font: inherit; }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 238px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      padding: 14px;
+      background: #fff;
+      border-right: 1px solid var(--line);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 14px;
+      overflow: auto;
+    }
+
+    .brand {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 5px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: #0b1f3a;
+      font-size: 16px;
+      line-height: 1.18;
+      font-weight: 800;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 42px;
+      gap: 8px;
+    }
+
+    .layout-link,
+    .reload {
+      height: 40px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue-dark);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .layout-link {
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      justify-content: start;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .reload { padding: 0; }
+
+    .nav {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      width: 100%;
+      min-height: 44px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #3d4a5c;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 9px 10px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .tab-btn svg { color: var(--blue-dark); }
+    .tab-btn:hover { background: #f1f5fb; }
+    .tab-btn.active {
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+      box-shadow: inset 4px 0 0 var(--red);
+    }
+
+    .tip {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    main {
+      min-width: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .stage {
+      width: min(100%, calc((100vh - 28px) * 16 / 9));
+      max-width: 1500px;
+      aspect-ratio: 16 / 9;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 22px 28px 20px;
+      background: #fff;
+    }
+
+    .slide.active { display: grid; }
+
+    .topline { min-width: 0; }
+
+    .kicker {
+      color: var(--blue-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      margin: 0;
+      color: #101828;
+      font-size: clamp(24px, 2.35vw, 36px);
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .subhead {
+      max-width: 820px;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .content {
+      min-height: 0;
+      display: grid;
+    }
+
+    .content > * { min-height: 0; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .card,
+    .role,
+    .plant,
+    .phase,
+    .tool,
+    .source-card,
+    .question,
+    .next,
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(16, 24, 40, 0.05);
+    }
+
+    .card {
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .card h3,
+    .source-card h3,
+    .next h3 {
+      margin: 0;
+      color: #123b72;
+      font-size: 17px;
+      line-height: 1.18;
+      font-weight: 900;
+    }
+
+    .card p,
+    .source-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.42;
+    }
+
+    .network-wrap,
+    .question-wrap {
+      display: grid;
+      grid-template-columns: 0.92fr 1.25fr;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .network {
+      position: relative;
+      border-radius: 8px;
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .node {
+      position: absolute;
+      width: 132px;
+      min-height: 58px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 9px;
+      border-radius: 8px;
+      border: 2px solid #c5d7fb;
+      background: #fff;
+      color: var(--blue-dark);
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 900;
+      z-index: 2;
+    }
+
+    .node.core {
+      left: 50%;
+      top: 50%;
+      width: 138px;
+      height: 92px;
+      transform: translate(-50%, -50%);
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      font-size: 28px;
+    }
+
+    .node.n1 { left: 7%; top: 13%; }
+    .node.n2 { right: 7%; top: 13%; }
+    .node.n3 { left: 7%; bottom: 17%; }
+    .node.n4 { right: 7%; bottom: 17%; }
+
+    .connector {
+      position: absolute;
+      height: 2px;
+      background: #b8c9e8;
+      left: 50%;
+      top: 50%;
+      width: 28%;
+      transform-origin: 0 0;
+      z-index: 1;
+    }
+
+    .connector.c1 { transform: rotate(210deg); }
+    .connector.c2 { transform: rotate(330deg); }
+    .connector.c3 { transform: rotate(150deg); }
+    .connector.c4 { transform: rotate(30deg); }
+
+    .plant-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .plant {
+      min-height: 0;
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 14px;
+      background: #fff;
+      border-top: 5px solid var(--blue);
+    }
+
+    .plant:nth-child(2) { border-top-color: var(--green); }
+
+    .plant-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .plant-name {
+      color: #0b1f3a;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 6px 9px;
+      background: var(--soft-green);
+      color: #137333;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .metric-card {
+      padding: 10px;
+      background: #f8fbff;
+      box-shadow: none;
+      min-height: 70px;
+    }
+
+    .metric-card b {
+      display: block;
+      color: var(--blue-dark);
+      font-size: 15px;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .metric-card span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
+      display: block;
+    }
+
+    .plant-note {
+      color: #344054;
+      font-size: 14px;
+      line-height: 1.42;
+      align-self: end;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .plant-brief {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .overview-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .overview-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 9px 11px;
+      box-shadow: 0 4px 14px rgba(16, 24, 40, 0.04);
+    }
+
+    .overview-card b {
+      display: block;
+      color: var(--blue-dark);
+      font-size: 19px;
+      line-height: 1;
+      margin-bottom: 5px;
+      font-weight: 900;
+    }
+
+    .overview-card span {
+      color: var(--muted);
+      display: block;
+      font-size: 11.5px;
+      line-height: 1.22;
+    }
+
+    .plant-detail-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .plant-detail {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      min-height: 0;
+      box-shadow: 0 4px 14px rgba(16, 24, 40, 0.05);
+    }
+
+    .plant-visual {
+      min-height: 0;
+      background: #f2f5fb;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plant-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .plant-placeholder {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background:
+        linear-gradient(90deg, rgba(31, 74, 160, 0.08) 1px, transparent 1px),
+        linear-gradient(rgba(31, 74, 160, 0.08) 1px, transparent 1px),
+        #f8fbff;
+      background-size: 22px 22px;
+      color: var(--blue-dark);
+      text-align: center;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .plant-spec {
+      padding: 12px 14px;
+      border-top: 4px solid var(--blue);
+      display: grid;
+      gap: 8px;
+    }
+
+    .plant-detail:nth-child(2) .plant-spec { border-top-color: var(--red); }
+
+    .plant-spec h3 {
+      margin: 0;
+      color: #0b1f3a;
+      font-size: 19px;
+      line-height: 1.08;
+      font-weight: 900;
+    }
+
+    .spec-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .spec-meta span {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px 7px;
+      color: #27364b;
+      background: #f8fbff;
+      font-size: 11.5px;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .spec-meta b {
+      display: block;
+      color: var(--blue-dark);
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .system-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .system-tags span {
+      border: 1px solid #cfd9ec;
+      border-radius: 999px;
+      padding: 4px 7px;
+      color: var(--blue-dark);
+      background: var(--soft-blue);
+      font-size: 10.5px;
+      font-weight: 900;
+    }
+
+    .plant-spec p {
+      margin: 0;
+      color: #46566d;
+      font-size: 12.3px;
+      line-height: 1.34;
+    }
+
+    .ops-timeline-wrap {
+      display: grid;
+      grid-template-columns: 1.42fr 0.78fr;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .ops-timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      min-height: 0;
+    }
+
+    .ops-timeline:before {
+      content: "";
+      position: absolute;
+      left: 7%;
+      right: 7%;
+      top: 42px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue-dark), var(--red));
+      opacity: 0.9;
+    }
+
+    .ops-step {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .ops-dot {
+      justify-self: center;
+      width: 86px;
+      min-height: 86px;
+      border-radius: 999px;
+      background: #fff;
+      border: 5px solid var(--blue);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 8px;
+      color: var(--blue-dark);
+      font-size: 12px;
+      line-height: 1.05;
+      font-weight: 900;
+      box-shadow: 0 8px 20px rgba(15, 52, 127, 0.14);
+    }
+
+    .ops-step:nth-child(3) .ops-dot,
+    .ops-step:nth-child(5) .ops-dot {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .ops-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 7px;
+      min-height: 0;
+      box-shadow: 0 4px 14px rgba(16, 24, 40, 0.05);
+    }
+
+    .ops-box h3 {
+      margin: 0;
+      color: #0b1f3a;
+      font-size: 14px;
+      line-height: 1.16;
+      font-weight: 900;
+    }
+
+    .ops-box p {
+      margin: 0;
+      color: #4b5565;
+      font-size: 12.4px;
+      line-height: 1.32;
+    }
+
+    .ops-summary {
+      display: grid;
+      gap: 10px;
+      min-height: 0;
+      align-content: stretch;
+    }
+
+    .ops-summary .cards {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .ops-summary .card {
+      padding: 14px;
+    }
+
+    .source-link {
+      color: var(--blue-dark);
+      font-size: 10.5px;
+      font-weight: 900;
+      text-decoration: none;
+      justify-self: start;
+    }
+
+    .org-grid {
+      display: grid;
+      grid-template-columns: 1.15fr repeat(2, 1fr);
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .role {
+      min-height: 0;
+      padding: 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .role:first-child {
+      grid-row: span 2;
+      background: var(--soft-blue);
+      border-color: #c9daf8;
+    }
+
+    .standards {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .responsibility-arrow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      color: var(--blue-dark);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .responsibility-arrow:before,
+    .responsibility-arrow:after {
+      content: "";
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--blue-dark));
+      border-radius: 999px;
+    }
+
+    .responsibility-arrow:after {
+      background: linear-gradient(90deg, var(--blue-dark), transparent);
+    }
+
+    .standard-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .standard-card {
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      box-shadow: 0 4px 14px rgba(16, 24, 40, 0.05);
+    }
+
+    .standard-head {
+      padding: 10px 11px;
+      background: var(--blue);
+      color: #fff;
+      min-height: 58px;
+      display: grid;
+      align-content: center;
+      gap: 2px;
+    }
+
+    .standard-card.red .standard-head { background: var(--red); }
+    .standard-card.green .standard-head { background: var(--green); }
+    .standard-card.yellow .standard-head { background: #f08c00; }
+
+    .standard-head b {
+      font-size: 14px;
+      line-height: 1.08;
+      font-weight: 900;
+    }
+
+    .standard-head span {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 900;
+      opacity: 0.9;
+    }
+
+    .standard-body {
+      min-height: 0;
+      padding: 9px 10px;
+      display: grid;
+      gap: 7px;
+      overflow: hidden;
+    }
+
+    .standard-section h4 {
+      margin: 0 0 3px;
+      color: var(--blue-dark);
+      font-size: 11.5px;
+      font-weight: 900;
+    }
+
+    .standard-section ul {
+      margin: 0;
+      padding-left: 15px;
+      color: #344054;
+      font-size: 10.7px;
+      line-height: 1.25;
+    }
+
+    .standard-section li { margin: 1px 0; }
+
+    .key-role {
+      margin: 0;
+      padding-top: 6px;
+      border-top: 1px solid var(--line);
+      color: #46566d;
+      font-size: 10.8px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .evidence {
+      margin: 0;
+      color: #46566d;
+      font-size: 10.6px;
+      line-height: 1.22;
+      font-weight: 700;
+    }
+
+    .common-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      padding: 9px;
+      border-radius: 8px;
+      background: var(--blue-dark);
+    }
+
+    .common-strip span {
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue-dark);
+      text-align: center;
+      padding: 7px 5px;
+      font-size: 11px;
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: 1.08fr 0.92fr;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .domain-card {
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(16, 24, 40, 0.05);
+      overflow: hidden;
+    }
+
+    .domain-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 9px;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .domain-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .domain-card.green .domain-icon { background: #00796b; }
+    .domain-card.orange .domain-icon { background: #ef5b00; }
+    .domain-card.purple .domain-icon { background: #6a1b9a; }
+
+    .domain-label {
+      color: var(--blue-dark);
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .domain-card.green .domain-label { color: #00796b; }
+    .domain-card.orange .domain-label { color: #ef5b00; }
+    .domain-card.purple .domain-label { color: #6a1b9a; }
+
+    .domain-title {
+      color: #0b1f3a;
+      font-size: 21px;
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .domain-list {
+      min-height: 0;
+      display: grid;
+      align-content: start;
+      gap: 3px;
+      overflow: hidden;
+    }
+
+    .domain-item {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 6px;
+      align-items: start;
+    }
+
+    .domain-tag {
+      border-radius: 6px;
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+      text-align: center;
+      padding: 3px 5px;
+      font-size: 8.8px;
+      line-height: 1.1;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .domain-card.green .domain-tag { background: #dff3ef; color: #00796b; }
+    .domain-card.orange .domain-tag { background: #fff0df; color: #c74700; }
+    .domain-card.purple .domain-tag { background: #f0e2f6; color: #6a1b9a; }
+
+    .domain-item b {
+      display: inline;
+      color: #0b1f3a;
+      font-size: 15px;
+      line-height: 1.16;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .domain-item span {
+      display: none;
+      color: #7a8699;
+      font-size: 9.6px;
+      line-height: 1.15;
+    }
+
+    .domain-item span:before {
+      content: " - ";
+    }
+
+    .role-title {
+      color: var(--blue-dark);
+      font-size: 17px;
+      line-height: 1.15;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .role-short {
+      color: #137333;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .clean {
+      margin: 0;
+      padding-left: 17px;
+      color: #4b5565;
+      font-size: 12.8px;
+      line-height: 1.36;
+    }
+
+    .clean li { margin: 3px 0; }
+
+    .matrix-wrap {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 13px;
+    }
+
+    th {
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+      padding: 10px 11px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    td {
+      border-top: 1px solid var(--line);
+      padding: 10px 11px;
+      color: #4b5565;
+      line-height: 1.33;
+      vertical-align: top;
+    }
+
+    td:first-child {
+      color: #123b72;
+      font-weight: 900;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .phase {
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      gap: 8px;
+      border-top: 5px solid var(--blue);
+    }
+
+    .phase:nth-child(2) { border-top-color: var(--green); }
+    .phase:nth-child(3) { border-top-color: var(--yellow); }
+    .phase:nth-child(4) { border-top-color: var(--red); }
+
+    .phase-label {
+      color: var(--blue-dark);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .phase-title {
+      color: #0b1f3a;
+      font-size: 21px;
+      line-height: 1.12;
+      font-weight: 900;
+    }
+
+    .phase-time {
+      color: #137333;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .phase-text {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .tool-list {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .tool {
+      padding: 14px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 8px;
+    }
+
+    .tool-name {
+      color: var(--blue-dark);
+      font-size: 16px;
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .tool-ex {
+      color: #137333;
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .tool-purpose {
+      color: var(--muted);
+      font-size: 12.2px;
+      line-height: 1.38;
+    }
+
+    .question-wrap {
+      display: block;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-color: #9bb7e8 #eef3fb;
+      scrollbar-width: thin;
+    }
+
+    .qa-list {
+      display: block;
+      min-height: 0;
+    }
+
+    .qa-row {
+      display: block;
+      min-height: 0;
+      padding: 10px 12px;
+      border: 1px solid #c9daf8;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 3px 12px rgba(16, 24, 40, 0.04);
+    }
+
+    .qa-row + .qa-row {
+      margin-top: 10px;
+    }
+
+    .qa-prompt {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      min-height: auto;
+    }
+
+    .qa-no {
+      margin-top: 1px;
+      color: var(--red);
+      font-size: 11px;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .qa-question {
+      color: var(--blue-dark);
+      font-size: 14.5px;
+      line-height: 1.16;
+      font-weight: 400;
+    }
+
+    .qa-answer-wrap {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px;
+      margin-top: 7px;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    .qa-answer-label {
+      color: var(--green);
+      font-size: 11px;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .qa-answer {
+      width: 100%;
+      resize: none;
+      min-height: 0;
+      height: 58px;
+      border: 1px solid #d6e0f2;
+      border-radius: 8px;
+      background: #f8fbff;
+      padding: 8px 10px;
+      color: #17324d;
+      font-size: 12.5px;
+      line-height: 1.25;
+      font-family: var(--font);
+      outline: none;
+      overflow: auto;
+    }
+
+    .qa-answer:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31, 74, 160, 0.12);
+    }
+
+    .qa-answer::placeholder {
+      color: #9aa7b8;
+    }
+
+    .source-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .source-card {
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 9px;
+      min-height: 0;
+    }
+
+    .source-card a {
+      color: var(--blue-dark);
+      font-size: 12px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .footer {
+      min-height: 30px;
+      display: grid;
+      grid-template-columns: auto 180px;
+      gap: 16px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .progress {
+      height: 7px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #edf2f7;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: var(--blue);
+    }
+
+    .empty {
+      display: grid;
+      place-items: center;
+      height: 100%;
+      color: var(--muted);
+      text-align: center;
+      padding: 32px;
+    }
+
+    @media (max-width: 1100px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: relative; height: auto; grid-template-rows: auto auto auto auto; }
+      .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      main { padding: 12px; min-height: auto; }
+      .stage { width: 100%; }
+      .slide { padding: 20px; overflow: auto; }
+      .cards, .plant-grid, .plant-detail-grid, .overview-strip, .network-wrap, .org-grid, .timeline, .tool-list, .question-wrap, .source-wrap, .standard-grid, .common-strip, .domain-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .role:first-child { grid-row: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="./assets/logo-evngenco3-ops.png" alt="EVNGENCO3 OPS logo" />
+        <div>
+          <h1 id="brandTitle">OPS x KIPHRD</h1>
+          <p id="brandSub">Training Program Discussion</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <a class="layout-link" href="./ops_kiphrd_layout.js" target="_blank" rel="noopener" title="Open editable layout file">
+          <span data-icon="edit"></span>
+          <span>Open layout file</span>
+        </a>
+        <button class="reload" type="button" onclick="location.reload()" title="Reload after editing">
+          <span data-icon="refresh"></span>
+        </button>
+      </div>
+      <nav class="nav" id="nav" aria-label="Presentation tabs"></nav>
+      <div class="tip">Edit only <b>ops_kiphrd_layout.js</b>, then reload this page. Use left/right arrow keys to move between tabs.</div>
+    </aside>
+    <main>
+      <section class="stage" id="stage" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const data = window.OPS_KIPHRD_LAYOUT;
+      const nav = document.getElementById("nav");
+      const stage = document.getElementById("stage");
+      const discussionAnswerStore = "ops-kiphrd-discussion-answers-v2";
+      const iconPaths = {
+        hub: '<path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/><circle cx="12" cy="12" r="4"/>',
+        factory: '<path d="M3 21h18"/><path d="M5 21V9l5 3V9l5 3V6h4v15"/><path d="M9 17h1"/><path d="M14 17h1"/>',
+        users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+        check: '<path d="M20 6 9 17l-5-5"/><path d="M21 12a9 9 0 1 1-3-6.7"/>',
+        route: '<circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.4 17.2 15.6 6.8"/><path d="M8 19h8a3 3 0 0 0 0-6H8a3 3 0 0 1 0-6h2"/>',
+        school: '<path d="m22 10-10-5-10 5 10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/><path d="M22 10v6"/>',
+        tool: '<path d="M14.7 6.3a4 4 0 0 0-5 5L3 18v3h3l6.7-6.7a4 4 0 0 0 5-5l-2.4 2.4-3-3 2.4-2.4Z"/>',
+        message: '<path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/>',
+        link: '<path d="M10 13a5 5 0 0 0 7.1 0l2.8-2.8a5 5 0 0 0-7.1-7.1l-1.6 1.6"/><path d="M14 11a5 5 0 0 0-7.1 0L4.1 13.8a5 5 0 0 0 7.1 7.1l1.6-1.6"/>',
+        edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+        refresh: '<path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/>'
+      };
+
+      function esc(value) {
+        return String(value ?? "").replace(/[&<>"]/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]));
+      }
+
+      function savedDiscussionAnswer(key, fallback) {
+        try {
+          const answers = JSON.parse(localStorage.getItem(discussionAnswerStore) || "{}");
+          return Object.prototype.hasOwnProperty.call(answers, key) ? answers[key] : fallback;
+        } catch (error) {
+          return fallback;
+        }
+      }
+
+      function saveDiscussionAnswer(key, value) {
+        try {
+          const answers = JSON.parse(localStorage.getItem(discussionAnswerStore) || "{}");
+          answers[key] = value;
+          localStorage.setItem(discussionAnswerStore, JSON.stringify(answers));
+        } catch (error) {
+          // Meeting notes are optional; ignore storage errors in locked-down browsers.
+        }
+      }
+
+      function icon(name) {
+        return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (iconPaths[name] || iconPaths.hub) + "</svg>";
+      }
+
+      function cardGrid(cards) {
+        return '<div class="cards">' + (cards || []).map((card) => '<article class="card"><h3>' + esc(card.title) + '</h3><p>' + esc(card.text) + "</p></article>").join("") + "</div>";
+      }
+
+      function renderNetwork(tab) {
+        return '<div class="network-wrap"><div class="network"><div class="connector c1"></div><div class="connector c2"></div><div class="connector c3"></div><div class="connector c4"></div><div class="node core">OPS</div><div class="node n1">Operate</div><div class="node n2">Standardize</div><div class="node n3">Train</div><div class="node n4">Improve</div></div>' + cardGrid(tab.cards) + "</div>";
+      }
+
+      function renderOpsTimeline(tab) {
+        const steps = '<div class="ops-timeline">' + (tab.timeline || []).map((item) => '<article class="ops-step"><div class="ops-dot">' + esc(item.date) + '</div><div class="ops-box"><h3>' + esc(item.title) + '</h3><p>' + esc(item.text) + '</p></div></article>').join("") + '</div>';
+        return '<div class="ops-timeline-wrap">' + steps + '<aside class="ops-summary">' + cardGrid(tab.cards) + '</aside></div>';
+      }
+
+      function renderPlants(tab) {
+        return '<div class="plant-grid">' + (tab.plantCards || []).map((plant) => {
+          const metrics = [
+            ["Capacity", plant.capacity],
+            ["Transfer", plant.handover],
+            ["Block", plant.configuration]
+          ].map((item) => '<div class="metric-card"><b>' + esc(item[1]) + '</b><span>' + esc(item[0]) + "</span></div>").join("");
+          return '<article class="plant"><div class="plant-head"><div class="plant-name">' + esc(plant.name) + '</div><div class="badge">' + esc(plant.type) + '</div></div><div class="metric-row">' + metrics + '</div><div class="plant-note">' + esc(plant.note) + "</div></article>";
+        }).join("") + "</div>";
+      }
+
+      function renderPlantBrief(tab) {
+        const overview = '<div class="overview-strip">' + (tab.overview || []).map((item) => '<div class="overview-card"><b>' + esc(item.value) + '</b><span>' + esc(item.label) + '</span></div>').join("") + '</div>';
+        const plants = '<div class="plant-detail-grid">' + (tab.plantCards || []).map((plant) => {
+          const fallback = plant.imageFallback ? ' data-fallback="' + esc(plant.imageFallback) + '"' : "";
+          const visual = plant.image ? '<img src="' + esc(plant.image) + '" alt="' + esc(plant.name) + ' overview"' + fallback + ' />' : '<div class="plant-placeholder">Plant image / single-line diagram<br />to be added from PM2.2 introduction file</div>';
+          const meta = [
+            ["Capacity", plant.capacity],
+            ["Configuration", plant.configuration],
+            ["Handover", plant.handover]
+          ].map((item) => '<span><b>' + esc(item[0]) + '</b>' + esc(item[1]) + '</span>').join("");
+          const systems = '<div class="system-tags">' + (plant.systems || []).map((system) => '<span>' + esc(system) + '</span>').join("") + '</div>';
+          const link = plant.sourceUrl ? '<a class="source-link" href="' + esc(plant.sourceUrl) + '" target="_blank" rel="noopener">Online image/source</a>' : "";
+          return '<article class="plant-detail"><div class="plant-visual">' + visual + '</div><div class="plant-spec"><h3>' + esc(plant.name) + '</h3><div class="spec-meta">' + meta + '</div>' + systems + '<p>' + esc(plant.note) + '</p>' + link + '</div></article>';
+        }).join("") + '</div>';
+        return '<div class="plant-brief">' + overview + plants + '</div>';
+      }
+
+      function renderOrg(tab) {
+        return '<div class="org-grid">' + (tab.org || []).map((role) => '<article class="role"><div class="role-title">' + esc(role.role) + '</div><div class="role-short">' + esc(role.short) + '</div><ul class="clean">' + (role.bullets || []).map((bullet) => '<li>' + esc(bullet) + "</li>").join("") + "</ul></article>").join("") + "</div>";
+      }
+
+      function renderPositionStandards(tab) {
+        const cards = '<div class="standard-grid">' + (tab.org || []).map((role) => {
+          const knowledge = (role.knowledge || []).map((item) => '<li>' + esc(item) + '</li>').join("");
+          const skills = (role.skills || []).map((item) => '<li>' + esc(item) + '</li>').join("");
+          return '<article class="standard-card ' + esc(role.color || 'blue') + '"><div class="standard-head"><b>' + esc(role.role) + '</b><span>' + esc(role.short) + '</span></div><div class="standard-body"><div class="standard-section"><h4>A. Knowledge</h4><ul>' + knowledge + '</ul></div><div class="standard-section"><h4>B. Skills</h4><ul>' + skills + '</ul></div><p class="key-role"><b>C. Key role:</b> ' + esc(role.keyRole) + '</p><p class="evidence"><b>Evidence:</b> ' + esc(role.evidence) + '</p></div></article>';
+        }).join("") + '</div>';
+        const common = '<div class="common-strip">' + (tab.commonRequirements || []).map((item) => '<span>' + esc(item) + '</span>').join("") + '</div>';
+        return '<div class="standards"><div class="responsibility-arrow">Increasing integration and responsibility</div>' + cards + common + '</div>';
+      }
+
+      function renderMatrix(tab) {
+        const matrix = tab.matrix || { columns: [], rows: [] };
+        return '<div class="matrix-wrap"><table><thead><tr>' + matrix.columns.map((column) => '<th>' + esc(column) + "</th>").join("") + "</tr></thead><tbody>" + matrix.rows.map((row) => "<tr>" + row.map((cell) => '<td>' + esc(cell) + "</td>").join("") + "</tr>").join("") + "</tbody></table></div>";
+      }
+
+      function renderTimeline(tab) {
+        return '<div class="timeline">' + (tab.timeline || []).map((item) => '<article class="phase"><div class="phase-label">' + esc(item.phase) + '</div><div class="phase-title">' + esc(item.title) + '</div><div class="phase-time">' + esc(item.time) + '</div><div class="phase-text">' + esc(item.text) + "</div></article>").join("") + "</div>";
+      }
+
+      function renderTools(tab) {
+        return '<div class="tool-list">' + (tab.tools || []).map((tool) => '<article class="tool"><div class="tool-name">' + esc(tool.name) + '</div><div class="tool-ex">' + esc(tool.examples) + '</div><div class="tool-purpose">' + esc(tool.purpose) + "</div></article>").join("") + "</div>";
+      }
+
+      function renderTrainingDomains(tab) {
+        return '<div class="domain-grid">' + (tab.domains || []).map((domain) => {
+          const items = (domain.items || []).map((item) => '<div class="domain-item"><div class="domain-tag">' + esc(item.tag) + '</div><div><b>' + esc(item.name) + '</b><span>' + esc(item.detail) + '</span></div></div>').join("");
+          return '<article class="domain-card ' + esc(domain.color || 'blue') + '"><div class="domain-head"><div class="domain-icon">' + esc((domain.label || 'D').replace('Domain ', '')) + '</div><div><div class="domain-label">' + esc(domain.label) + '</div><div class="domain-title">' + esc(domain.title) + '</div></div></div><div class="domain-list">' + items + '</div></article>';
+        }).join("") + '</div>';
+      }
+
+      function renderQuestions(tab) {
+        return '<div class="question-wrap"><div class="qa-list">' + (tab.questions || []).map((item, index) => {
+          const question = typeof item === "string" ? item : item.question;
+          const no = typeof item === "string" ? String(index + 1) : (item.no || String(index + 1));
+          const key = "q" + no;
+          const answer = savedDiscussionAnswer(key, typeof item === "string" ? "" : (item.answer || ""));
+          return '<article class="qa-row"><div class="qa-prompt"><div class="qa-no">Q' + esc(no) + '</div><div class="qa-question">' + esc(question) + '</div></div><div class="qa-answer-wrap"><div class="qa-answer-label">A</div><textarea class="qa-answer" data-answer-key="' + esc(key) + '" placeholder="Type KIPHRD answer / meeting note here">' + esc(answer) + '</textarea></div></article>';
+        }).join("") + "</div></div>";
+      }
+
+      function renderSources(tab) {
+        return '<div class="source-wrap">' + (tab.sources || []).map((source) => '<article class="source-card"><h3>' + esc(source.title) + '</h3><p>' + esc(source.note) + '</p>' + (source.url ? '<a href="' + esc(source.url) + '" target="_blank" rel="noopener">Open source</a>' : "<span></span>") + "</article>").join("") + "</div>";
+      }
+
+      function visual(tab) {
+        if (tab.visual === "network") return renderNetwork(tab);
+        if (tab.visual === "opsTimeline") return renderOpsTimeline(tab);
+        if (tab.visual === "plantCards") return renderPlants(tab);
+        if (tab.visual === "plantBrief") return renderPlantBrief(tab);
+        if (tab.visual === "org") return renderOrg(tab);
+        if (tab.visual === "positionStandards") return renderPositionStandards(tab);
+        if (tab.visual === "matrix") return renderMatrix(tab);
+        if (tab.visual === "timeline") return renderTimeline(tab);
+        if (tab.visual === "tools") return renderTools(tab);
+        if (tab.visual === "trainingDomains") return renderTrainingDomains(tab);
+        if (tab.visual === "questions") return renderQuestions(tab);
+        if (tab.visual === "sources") return renderSources(tab);
+        return cardGrid(tab.cards);
+      }
+
+      function activate(index) {
+        Array.from(nav.children).forEach((button, i) => button.classList.toggle("active", i === index));
+        Array.from(stage.children).forEach((slide, i) => slide.classList.toggle("active", i === index));
+      }
+
+      if (!data || !Array.isArray(data.tabs)) {
+        stage.innerHTML = '<div class="empty">Layout data not found. Please check ops_kiphrd_layout.js.</div>';
+        return;
+      }
+
+      document.title = data.meta.title || document.title;
+      document.getElementById("brandTitle").textContent = data.meta.shortTitle || data.meta.title || "OPS x KIPHRD";
+      document.getElementById("brandSub").textContent = data.meta.subtitle || "";
+      document.querySelectorAll("[data-icon]").forEach((target) => { target.innerHTML = icon(target.dataset.icon); });
+
+      data.tabs.forEach((tab, index) => {
+        const button = document.createElement("button");
+        button.className = "tab-btn" + (index === 0 ? " active" : "");
+        button.type = "button";
+        button.innerHTML = icon(tab.icon) + "<span>" + esc(tab.label) + "</span>";
+        button.addEventListener("click", () => activate(index));
+        nav.appendChild(button);
+
+        const slide = document.createElement("section");
+        slide.className = "slide" + (index === 0 ? " active" : "");
+        slide.innerHTML = '<div class="topline"><div class="kicker">' + esc(data.meta.meetingTag || "") + '</div><h2>' + esc(tab.headline) + '</h2><div class="subhead">' + esc(tab.subhead) + '</div></div><div class="content">' + visual(tab) + '</div><div class="footer"><div>Slide ' + (index + 1) + ' / ' + data.tabs.length + '</div><div class="progress" aria-hidden="true"><div class="bar" style="width:' + (((index + 1) / data.tabs.length) * 100) + '%"></div></div></div>';
+        stage.appendChild(slide);
+      });
+
+      stage.addEventListener("input", (event) => {
+        const target = event.target;
+        if (target.matches(".qa-answer[data-answer-key]")) {
+          saveDiscussionAnswer(target.dataset.answerKey, target.value);
+        }
+      });
+
+      document.querySelectorAll("img[data-fallback]").forEach((img) => {
+        img.addEventListener("error", () => {
+          const fallback = img.getAttribute("data-fallback");
+          if (fallback && img.src.indexOf(fallback) === -1) {
+            img.src = fallback;
+          }
+        }, { once: true });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        const current = Array.from(stage.children).findIndex((slide) => slide.classList.contains("active"));
+        if (event.key === "ArrowRight") activate(Math.min(data.tabs.length - 1, current + 1));
+        if (event.key === "ArrowLeft") activate(Math.max(0, current - 1));
+      });
+    })();
+  </script>
+</body>
+</html>
