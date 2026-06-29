@@ -81,7 +81,7 @@ window.OPS_KIPHRD_LAYOUT = {
       label: "Position & Competency",
       icon: "users",
       headline: "3. Operation position and competency standards",
-      subhead: "The PM2.2 operating shift model should be converted into a position-based qualification standard: knowledge, skills, key role and assessment evidence.",
+      subhead: "The PM2.2 operating shift model should be converted into a position-based qualification standard: knowledge, skills and key role.",
       visual: "positionStandards",
       org: [
         {
