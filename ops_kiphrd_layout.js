@@ -22,19 +22,25 @@ window.OPS_KIPHRD_LAYOUT = {
       label: "OPS",
       icon: "hub",
       headline: "1. OPS introduction and operating context",
-      subhead: "OPS is the EVNGENCO3 operation service branch established to provide professional power plant operation services, starting from PM3 and PM2.2 after BOT transfer to EVN.",
+      subhead: "OPS is positioned under EVNGENCO3 to provide professional power plant operation services, starting with PM3 and PM2.2 after BOT transfer to EVN.",
       visual: "opsTimeline",
+      relationship: {
+        evn: "EVN",
+        genco3: "GENCO3",
+        head: "Head Office",
+        ops: "OPS",
+        eps: "EPS",
+        plants: "Power Plants",
+        note: "EVN is the controlling shareholder of EVNGENCO3 JSC. OPS is an EVNGENCO3 branch focused on operation services."
+      },
       timeline: [
-        { date: "EVN", title: "Controlling shareholder", text: "Vietnam Electricity (EVN) holds controlling ownership in EVNGENCO3 JSC." },
-        { date: "GENCO3", title: "Parent company", text: "EVNGENCO3 is a joint stock generation company in the EVN ecosystem." },
-        { date: "01 Jan 2026", title: "OPS established", text: "EVNGENCO3 Operation Services (OPS) is established as a branch under EVNGENCO3." },
-        { date: "Core business", title: "Power plant operation services", text: "OPS' main business is providing professional operation services for power generation assets." },
-        { date: "PM3 + PM2.2", title: "Initial operating contracts", text: "OPS currently operates PM3 and PM2.2 for EVN after completion of the BOT period." }
+        { date: "01 Jan 2026", title: "OPS established", text: "EVNGENCO3 Operation Services starts as a branch under EVNGENCO3." },
+        { date: "PM3", title: "Operation service baseline", text: "OPS operates Phu My 3 for EVN after BOT transfer. EVN handover basis: 01 Mar 2024." },
+        { date: "PM2.2", title: "Second reference plant", text: "OPS operates Phu My 2.2 for EVN after BOT transfer. EVN handover basis: 04 Feb 2025." }
       ],
       cards: [
-        { title: "Ownership context", text: "EVN -> controlling ownership in EVNGENCO3 JSC -> OPS as an EVNGENCO3 operation service branch." },
-        { title: "Business focus", text: "Operation services for power plants: shift operation, control room monitoring, field operation, operating procedures and dispatch compliance." },
-        { title: "Current baseline", text: "PM3 and PM2.2 are the first reference plants for OPS to build its operating model, competency standards and training roadmap." }
+        { title: "OPS mandate", text: "Provide power plant operation services: shift operation, control room monitoring, field operation and dispatch compliance." },
+        { title: "Development baseline", text: "PM3 and PM2.2 are reference plants for OPS to standardize shift roles, competency standards and training roadmap." }
       ]
     },
     {
