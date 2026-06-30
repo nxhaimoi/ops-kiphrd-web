@@ -39,8 +39,7 @@ window.OPS_KIPHRD_LAYOUT = {
         { date: "PM2.2", title: "Second reference plant", text: "OPS operates Phu My 2.2 for EVN after BOT transfer. EVN handover basis: 04 Feb 2025." }
       ],
       cards: [
-        { title: "OPS mandate", text: "Provide power plant operation services: shift operation, control room monitoring, field operation and dispatch compliance." },
-        { title: "Development baseline", text: "PM3 and PM2.2 are reference plants for OPS to standardize shift roles, competency standards and training roadmap." }
+        { title: "OPS characteristics", text: "Service branch under EVNGENCO3. Main business: power plant operation services including shift operation, control room monitoring, field operation and dispatch compliance. PM3 and PM2.2 are the first reference plants for OPS competency standards and training roadmap." }
       ]
     },
     {

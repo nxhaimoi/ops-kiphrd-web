@@ -646,7 +646,7 @@
     }
 
     .ops-context .cards {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 10px;
     }
 
@@ -679,8 +679,12 @@
     .ops-milestones {
       display: grid;
       gap: 8px;
-      align-content: stretch;
+      align-content: start;
       min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-color: #9bb7e8 #eef3fb;
+      scrollbar-width: thin;
     }
 
     .ops-milestone {
@@ -688,7 +692,7 @@
       grid-template-columns: 82px 1fr;
       gap: 10px;
       align-items: stretch;
-      min-height: 0;
+      min-height: 74px;
     }
 
     .ops-date {
@@ -1390,7 +1394,7 @@
       function renderOpsTimeline(tab) {
         const rel = tab.relationship || {};
         const milestones = '<div class="ops-milestones">' + (tab.timeline || []).map((item) => '<article class="ops-milestone"><div class="ops-date">' + esc(item.date) + '</div><div class="ops-event"><h3>' + esc(item.title) + '</h3><p>' + esc(item.text) + '</p></div></article>').join("") + '</div>';
-        const chart = '<section class="ops-relationship"><div class="ops-panel-title">Corporate relationship</div><div class="ops-chart"><svg viewBox="0 0 500 330" preserveAspectRatio="none" aria-hidden="true"><path d="M250 44 V92 M250 138 V275 M250 206 H168 V247 M250 206 H110 V247 M250 275 H184 V318 M250 275 H366 V318" fill="none" stroke="#0f347f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M168 206 H250" fill="none" stroke="#ed1c24" stroke-width="3" stroke-linecap="round"/></svg><div class="org-node evn">' + esc(rel.evn || "EVN") + '<small>controlling owner</small></div><div class="org-node genco3">' + esc(rel.genco3 || "GENCO3") + '<small>parent company</small></div><div class="org-node head">' + esc(rel.head || "Head Office") + '</div><div class="org-node ops">' + esc(rel.ops || "OPS") + '<small>operation services</small></div><div class="org-node eps">' + esc(rel.eps || "EPS") + '</div><div class="org-node plants">' + esc(rel.plants || "Power Plants") + '</div></div><p class="ops-note">' + esc(rel.note || "") + '</p></section>';
+        const chart = '<section class="ops-relationship"><div class="ops-panel-title">Corporate relationship</div><div class="ops-chart"><svg viewBox="0 0 500 330" preserveAspectRatio="none" aria-hidden="true"><path d="M250 44 V92 M250 138 V275 M250 206 H170 M110 206 V247 M250 275 H184 V318 M250 275 H366 V318" fill="none" stroke="#0f347f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M170 206 H250" fill="none" stroke="#ed1c24" stroke-width="3" stroke-linecap="round"/></svg><div class="org-node evn">' + esc(rel.evn || "EVN") + '<small>controlling owner</small></div><div class="org-node genco3">' + esc(rel.genco3 || "GENCO3") + '<small>parent company</small></div><div class="org-node head">' + esc(rel.head || "Head Office") + '</div><div class="org-node ops">' + esc(rel.ops || "OPS") + '<small>operation services</small></div><div class="org-node eps">' + esc(rel.eps || "EPS") + '</div><div class="org-node plants">' + esc(rel.plants || "Power Plants") + '</div></div><p class="ops-note">' + esc(rel.note || "") + '</p></section>';
         const context = '<section class="ops-context">' + cardGrid(tab.cards) + '<div class="ops-milestone-panel"><div class="ops-panel-title">OPS operating milestones</div>' + milestones + '</div></section>';
         return '<div class="ops-intro">' + chart + context + '</div>';
       }
